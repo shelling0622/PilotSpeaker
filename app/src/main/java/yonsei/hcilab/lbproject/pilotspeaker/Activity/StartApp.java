@@ -8,20 +8,20 @@ import android.widget.Button;
 
 import yonsei.hcilab.lbproject.pilotspeaker.R;
 
-public class MainActivity extends AppCompatActivity {
+public class StartApp extends AppCompatActivity {
 
     Button btnMainStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_start_app);
 
         btnMainStart = (Button)findViewById(R.id.btn_main_start);
         btnMainStart.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RecordNListenStory.class);
+                Intent intent = new Intent(StartApp.this, RecordNListenStory.class);
                 startActivity(intent);
             }
         });
