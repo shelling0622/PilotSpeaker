@@ -12,13 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.StartApp">
-
-        </activity>
-        <activity android:name=".Activity.RecordNListenStory" />
+        <activity android:name=".Activity.StartApp" />
+        <activity android:name=".Activity.RecordDiary" />
         <activity android:name=".Activity.AskEmotion" />
-        <activity android:name=".Activity.SpeechApi.MainActivity"></activity>
+        <activity android:name=".Activity.AskDiaryKeyword" />
+        <activity android:name=".Activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.BeforeStart1" />
+        <activity android:name=".Activity.BeforeStart2" />
+        <activity android:name=".Activity.BeforeStart3" />
+        <activity android:name=".Activity.BeforeStart4" />
+        <activity android:name=".Activity.Mainpage"></activity>
     </application>
 
 </manifest>

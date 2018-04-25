@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".Activity.BeforeStart2">
+
+    <ImageView
+        android:id="@+id/img_before_start2_icon"
+        android:layout_width="@dimen/bigSize"
+        android:layout_height="@dimen/bigSize"
+        android:layout_marginTop="@dimen/mediumMargin"
+        android:background="@drawable/money"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_before_start2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/smallMargin"
+        android:lineSpacingExtra="8dp"
+        android:paddingLeft="@dimen/mediumMargin"
+        android:paddingRight="@dimen/mediumMargin"
+        android:text="여기서 수집된 데이터는 데이터 마켓이라는 플랫폼에서 기업에게 판매됩니다. 데이터 마켓은 개인이 직접 자신의 데이터를 기업이 사갈 수 있도록 올려놓고, 기업이 그 개인에게 직접 대가를 지불하고 데이터를 사가는 플랫폼이라고 생각하시면 됩니다."
+        android:textColor="#fff"
+        android:textSize="@dimen/smallText"
+        app:layout_constraintTop_toBottomOf="@id/img_before_start2_icon" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/smallMargin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <Button
+            android:id="@+id/btn_before_start2_before"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:padding="@dimen/mediumPadding"
+            android:text="이전으로"
+            android:textColor="#fff"
+            android:textSize="@dimen/smallText" />
+
+        <Button
+            android:id="@+id/btn_before_start2_after"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:padding="@dimen/mediumPadding"
+            android:text="다음으로"
+            android:textColor="#fff"
+            android:textSize="@dimen/smallText"
+            android:layout_marginLeft="@dimen/smallMargin"/>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

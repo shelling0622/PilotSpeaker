@@ -5,18 +5,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -24,29 +25,37 @@ import java.util.Date;
 
 import yonsei.hcilab.lbproject.pilotspeaker.R;
 
-public class AskEmotion extends AppCompatActivity {
+public class RecordDiary extends AppCompatActivity {
 
     private String filePath;
     private String fileName;
 
-    ImageView imgAskEmotionIcon;
-    ImageView imgAskEmotionRecording;
-    Button btnAskEmotionFinish;
+    ImageView imgRecordDiaryIcon;
+    ImageView imgRecordDiaryRecording;
+    Button btnRecordDiaryFinish;
 
     private MediaPlayer mediaPlayer;
     private MediaRecorder mediaRecorder;
-    
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Toast.makeText(this, "기록 진행중입니다.", Toast.LENGTH_LONG);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ask_emotion);
+        setContentView(R.layout.activity_record_diary);
 
-        imgAskEmotionIcon = (ImageView) findViewById(R.id.img_askemotion_icon);
-        imgAskEmotionRecording = (ImageView) findViewById(R.id.img_askemotion_recording);
-        btnAskEmotionFinish = (Button) findViewById(R.id.btn_askemotion_finish);
+        imgRecordDiaryIcon = (ImageView) findViewById(R.id.img_recorddiary_icon);
+        imgRecordDiaryRecording = (ImageView) findViewById(R.id.img_recorddiary_recording);
+        btnRecordDiaryFinish = (Button) findViewById(R.id.btn_recorddiary_finish);
 
         try {
-            playAudio(R.raw.message3);
+            playAudio(R.raw.message1);
 
         } catch (Exception e) {
 
@@ -55,29 +64,30 @@ public class AskEmotion extends AppCompatActivity {
         Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             public void run() {
-                imgAskEmotionIcon.setImageResource(R.drawable.microphone);
-                imgAskEmotionRecording.setVisibility(View.VISIBLE);
-                btnAskEmotionFinish.setVisibility(View.VISIBLE);
+                imgRecordDiaryIcon.setImageResource(R.drawable.microphone);
+                imgRecordDiaryRecording.setVisibility(View.VISIBLE);
+                btnRecordDiaryFinish.setVisibility(View.VISIBLE);
 
                 Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotation);
-                imgAskEmotionRecording.setAnimation(animation);
+                imgRecordDiaryRecording.setAnimation(animation);
 
-                if ((ActivityCompat.checkSelfPermission(AskEmotion.this, Manifest.permission.RECORD_AUDIO)
-                        != PackageManager.PERMISSION_GRANTED)) {
-                    ActivityCompat.requestPermissions(AskEmotion.this, new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            10);
-                } else {
+                if ((ActivityCompat.checkSelfPermission(RecordDiary.this, Manifest.permission.RECORD_AUDIO)
+                        == PackageManager.PERMISSION_GRANTED)) {
                     recordOn();
+
+                }else{
+                    Toast.makeText(RecordDiary.this, "Record no",Toast.LENGTH_LONG).show();
                 }
 
-            }
-        }, 4500);
 
-        btnAskEmotionFinish.setOnClickListener(new Button.OnClickListener() {
+            }
+        }, 2500);
+
+        btnRecordDiaryFinish.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recordOff();
-                Intent intent = new Intent(AskEmotion.this, Mainpage.class);
+                Intent intent = new Intent(RecordDiary.this, AskDiaryKeyword.class);
                 startActivity(intent);
             }
         });
@@ -87,8 +97,8 @@ public class AskEmotion extends AppCompatActivity {
     public void setFileNameAndPath() {
 
         SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-        fileName = "emotion" + timestampFormat.format(new Date()).toString() + ".mp4";
-        filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PilotSpeaker/Emotion/";
+        fileName = "diary" + timestampFormat.format(new Date()).toString() + ".mp4";
+        filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PilotSpeaker/Diary/";
 
         File dir = new File(filePath);
         if (!dir.exists()) {
@@ -97,6 +107,10 @@ public class AskEmotion extends AppCompatActivity {
     }
 
     public void recordOn() {
+
+
+        Toast.makeText(RecordDiary.this, "Record",Toast.LENGTH_LONG).show();
+
 
         setFileNameAndPath();
         if (mediaRecorder != null) {
@@ -147,7 +161,7 @@ public class AskEmotion extends AppCompatActivity {
     private void playAudio(int url) throws Exception {
         killMediaPlayer();
 
-        mediaPlayer = MediaPlayer.create(AskEmotion.this, url);
+        mediaPlayer = MediaPlayer.create(RecordDiary.this, url);
         mediaPlayer.start();
     }
 
@@ -175,10 +189,10 @@ public class AskEmotion extends AppCompatActivity {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 recordOn();
             } else {
+                Toast.makeText(RecordDiary.this, "앱을 종료시켰다 다시 접속해주세요.", Toast.LENGTH_LONG).show();
                 //User denied Permission.
             }
         }
     }
 
 }
-
